@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -13,9 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Console cons = System.console();
         List<String> cartList = new ArrayList<>();
-        Methods method = new Methods();
-        String path = "";
-        String name = "";
+        Cart cart = null;
 
         // Printing out initial statements
         String directory = "./" + args[0];
@@ -36,9 +35,8 @@ public class Main {
             switch (userCommand) {
                 case "load":
                     String userAction = splitString[1].toLowerCase();
-                    path = "./shoppingcart/" + userAction + ".cart";
-                    name = userAction;
-                    cartList = method.load(path);
+                    cart = new Cart(userAction);
+                    cartList = cart.load();
                     System.out.printf("%s shopping cart loaded\n", userAction);
                     break;
 
@@ -48,21 +46,22 @@ public class Main {
                     break;
 
                 case "list":
-                    method.list(cartList);
+                    cart.list(cartList);
                     break;
 
                 case "add":
-                    method.add(splitString, cartList);
+                    List<String> toAdd = new ArrayList<>(Arrays.asList(splitString));
+                    toAdd.remove(0);
+                    cart.add(toAdd, cartList);
                     break;
 
                 case "delete":
-                    method.delete(splitString[1], cartList);
+                    cart.delete(splitString[1], cartList);
                     break;
 
                 case "save":
-                    Path output = Paths.get(path);
-                    method.save(output, cartList);
-                    System.out.printf("Cart contents saved to %s\n", name);
+                    cart.save(cartList);
+                    System.out.printf("Cart contents saved to %s\n", cart.getName());
                     break;
 
                 default:

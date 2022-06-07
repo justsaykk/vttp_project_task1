@@ -6,14 +6,26 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Methods {
+public class Cart {
+    private Path path;
+    private String name;
 
-    public List<String> load(String path) throws IOException {
+    public Cart(String name) {
+        this.name = name;
+        this.path = Paths.get("./shoppingcart/" + name + ".cart");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> load() throws IOException {
         List<String> cartList = new ArrayList<>();
-        File file = new File(path);
+        File file = path.toFile();
         String st;
         if (!file.exists()) {
             file.createNewFile();
@@ -28,7 +40,7 @@ public class Methods {
         return cartList;
     }
 
-    public void list(List<String> cartList) throws IOException {
+    public void list(List<String> cartList) {
         if (cartList.size() > 0) {
             for (int i = 0; i < cartList.size(); i++) {
                 System.out.printf("%d. %s\n", (i + 1), cartList.get(i));
@@ -38,11 +50,8 @@ public class Methods {
         }
     }
 
-    public void add(String[] items, List<String> cartList) throws IOException {
-        for (int i = 1; i < items.length; i++) {
-            String itemsToAdd = items[i];
-            cartList.add(itemsToAdd);
-        }
+    public void add(List<String> items, List<String> cartList) {
+        cartList.addAll(items);
     }
 
     public void delete(String index, List<String> cartList) {
@@ -56,7 +65,7 @@ public class Methods {
         }
     }
 
-    public void save(Path path, List<String> cartList) throws IOException {
+    public void save(List<String> cartList) {
         try {
             Files.write(path, cartList);
         } catch (IOException e) {

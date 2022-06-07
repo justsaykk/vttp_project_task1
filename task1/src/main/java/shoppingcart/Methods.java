@@ -51,8 +51,18 @@ public class Methods {
         for (int i = 1; i < items.length; i++) {
             String itemsToAdd = items[i];
             cartList.add(itemsToAdd);
-            System.out.printf("Cart List length %d", cartList.size());
         }
 
+    }
+
+    public void delete(String index) {
+        int toIndex = Integer.parseInt(index);
+        int toDelete = toIndex - 1;
+        if (toIndex > cartList.size()) {
+            System.out.println("Incorrect item index\n");
+        } else {
+            System.out.printf("%s removed from cart\n", cartList.get(toDelete));
+            cartList.remove(toDelete);
+        }
     }
 }

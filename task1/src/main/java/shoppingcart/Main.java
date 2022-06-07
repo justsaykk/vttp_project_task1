@@ -34,12 +34,12 @@ public class Main {
             String userInput = cons.readLine(">> What would you like to do? \n");
             String[] splitString = userInput.split(" ");
             String userCommand = splitString[0].toLowerCase();
-            Methods file = new Methods();
+            Methods method = new Methods();
 
             switch (userCommand) {
                 case "load":
                     String userAction = splitString[1].toLowerCase();
-                    file.load(userAction);
+                    method.load(userAction);
                     curFile = userAction;
                     break;
 
@@ -49,19 +49,20 @@ public class Main {
                     break;
 
                 case "list":
-                    file.list();
+                    method.list();
                     break;
 
                 case "add":
-                    file.add(splitString);
+                    method.add(splitString);
+                    break;
+
+                case "delete":
+                    method.delete(splitString[1]);
                     break;
 
                 default:
                     break;
             }
         }
-
-        // Load file
-
     }
 }

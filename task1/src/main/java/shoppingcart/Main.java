@@ -2,45 +2,34 @@ package shoppingcart;
 
 import java.io.Console;
 import java.io.IOException;
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
-    private String userCommand = "";
-    private String userAction = "";
-    private static String curFile = "";
-
-    // Getters
-    public String getUserCommand() {
-        return userCommand;
-    }
-
-    public String getUserAction() {
-        return userAction;
-    }
-
-    public String getCurFile() {
-        return curFile;
-    }
-
     public static void main(String[] args) throws IOException {
-        // Get console input
         Console cons = System.console();
-
-        // While loop to run program
+        List<String> cartList = new ArrayList<>();
+        Methods method = new Methods();
+        String path = "";
+        String name = "";
         boolean stop = false; // while-loop control statement
+
         while (!stop) {
             // Getting Command
             String userInput = cons.readLine(">> What would you like to do? \n");
             String[] splitString = userInput.split(" ");
             String userCommand = splitString[0].toLowerCase();
-            Methods method = new Methods();
 
             switch (userCommand) {
                 case "load":
                     String userAction = splitString[1].toLowerCase();
-                    method.load(userAction);
-                    curFile = userAction;
+                    path = "./shoppingcart/" + userAction + ".cart";
+                    name = userAction;
+                    cartList = method.load(path);
+                    System.out.printf("%s shopping cart loaded\n", userAction);
                     break;
 
                 case "exit":
@@ -49,15 +38,21 @@ public class Main {
                     break;
 
                 case "list":
-                    method.list();
+                    method.list(cartList);
                     break;
 
                 case "add":
-                    method.add(splitString);
+                    method.add(splitString, cartList);
                     break;
 
                 case "delete":
-                    method.delete(splitString[1]);
+                    method.delete(splitString[1], cartList);
+                    break;
+
+                case "save":
+                    Path output = Paths.get(path);
+                    method.save(output, cartList);
+                    System.out.printf("Cart contents saved to %s\n", name);
                     break;
 
                 default:

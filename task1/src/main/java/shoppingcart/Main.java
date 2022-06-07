@@ -16,7 +16,6 @@ public class Main {
         Methods method = new Methods();
         String path = "";
         String name = "";
-        boolean stop = false; // while-loop control statement
 
         // Printing out initial statements
         String directory = "./" + args[0];
@@ -24,6 +23,10 @@ public class Main {
         String[] directoryList = f.list();
         System.out.printf("There are %d carts in %s directory\n", directoryList.length, args[0]);
 
+        // while-loop control statement
+        boolean stop = false;
+
+        // This is the main program
         while (!stop) {
             // Getting Command
             String userInput = cons.readLine(">> What would you like to do? \n");

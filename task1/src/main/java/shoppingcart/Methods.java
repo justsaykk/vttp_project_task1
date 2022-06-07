@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Methods {
 
     public List<String> load(String path) throws IOException {
-        System.out.printf("path = %s\n", path);
         List<String> cartList = new ArrayList<>();
         File file = new File(path);
         String st;

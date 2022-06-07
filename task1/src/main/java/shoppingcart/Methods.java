@@ -12,18 +12,15 @@ import java.util.ArrayList;
 public class Methods {
 
     public List<String> load(String path) throws IOException {
+        System.out.printf("path = %s\n", path);
         List<String> cartList = new ArrayList<>();
         File file = new File(path);
-        BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
-
         if (!file.exists()) {
-            if (file.createNewFile()) {
-                System.out.printf("New file created at %s\n", path);
-            }
-            br.close();
-        }
-        if (file.exists()) {
+            file.createNewFile();
+            System.out.printf("New file created at %s\n", path);
+        } else {
+            BufferedReader br = new BufferedReader(new FileReader(file));
             while ((st = br.readLine()) != null) {
                 cartList.add(st);
             }

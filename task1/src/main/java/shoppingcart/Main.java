@@ -1,6 +1,7 @@
 package shoppingcart;
 
 import java.io.Console;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +17,12 @@ public class Main {
         String path = "";
         String name = "";
         boolean stop = false; // while-loop control statement
+
+        // Printing out initial statements
+        String directory = "./" + args[0];
+        File f = new File(directory);
+        String[] directoryList = f.list();
+        System.out.printf("There are %d carts in %s directory\n", directoryList.length, args[0]);
 
         while (!stop) {
             // Getting Command
